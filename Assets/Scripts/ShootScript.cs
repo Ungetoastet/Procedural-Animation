@@ -17,7 +17,7 @@ public class ShootScript : MonoBehaviour
     private float ShotForce;
 
     [SerializeField]
-    private KeyCode Code;
+    private KeyCode keyCode;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,8 @@ public class ShootScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(Code))
+        //Yeet "Projectile Prefab" with "ShotForce" in "ShotDirection" if "KeyCode" is pressed
+        if (Input.GetKeyDown(keyCode))
         {
             var Bullet = GameObject.Instantiate(ProjectilePrefab, transform.position + transform.TransformDirection(ShootOffset), transform.rotation);
             Rigidbody rb = Bullet.GetComponent<Rigidbody>();

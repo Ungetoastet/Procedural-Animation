@@ -39,17 +39,14 @@ public class AcR_Body : MonoBehaviour
     private Vector3 CGPosition;
     private Rigidbody rb;
 
-    //ToDo: Find CG and Raycast it to the Ground, then push body up.
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Handle Update Intervalls
         if (TimeToNextUpdate <= 0)
         {
             UpdateTootsies();
@@ -60,12 +57,15 @@ public class AcR_Body : MonoBehaviour
 
     void UpdateTootsies()
     {
+        //Cylce through foots
         ActiveTootsie++;
         if (ActiveTootsie == Tootsies.Length) ActiveTootsie = 0;
 
+        //Make a new layerMask with every layer except #31 (Enemy Layer)
         int layerMask = 1 << 31;
         layerMask = ~layerMask;
 
+        //Check for Ground and set CGPosition
         if (Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
             CGPosition = hit.point;
@@ -77,14 +77,16 @@ public class AcR_Body : MonoBehaviour
     {
         if (PlayerControllable) PlayerMove();
 
-        //Position Tootsies
+        //Position Tootsies with Calculate-function
         if (Vector3.Distance(Tootsies[ActiveTootsie].gameObject.transform.position, CalculateTootsies(ActiveTootsie)) >= 0.1f)
             Tootsies[ActiveTootsie].AddForce((CalculateTootsies(ActiveTootsie) - Tootsies[ActiveTootsie].transform.position) * FootSpeed);
         else
         {
+            //Freeze foot when it's at it's position to avoid overshoot
             Tootsies[ActiveTootsie].velocity = Vector3.zero;
         }
 
+        //Freeze every inactive foot for better controlability
         for (int i = 0; i < Tootsies.Length; i++)
         {
             if (i != ActiveTootsie) Tootsies[i].velocity = Vector3.zero;
@@ -92,18 +94,23 @@ public class AcR_Body : MonoBehaviour
 
         Debug.DrawLine(CalculateTootsies(ActiveTootsie), Tootsies[ActiveTootsie].transform.position, Color.blue, Time.deltaTime);
 
-        //Push Body Up
+        //Push Body Up (Stabilizing) - The lower it is, the harder the upwards Force
         rb.AddForce((EnemySize * 4.5f - Vector3.Distance(gameObject.transform.position, CGPosition)) * (Vector3.up * PushForce));
     }
 
     Vector3 CalculateTootsies(int TootsieIndex)
     {
+        /*Position calculation: 
+        1) Take the previously calculated CGPosition. 
+        2) Add the Offset per Foot. 
+        3) Add an offset for the velocity to not just have them toes dragging behind the body. */
         Vector3 FootsiePosition = (CGPosition + transform.TransformDirection(FootOffset[TootsieIndex].y, 0, FootOffset[TootsieIndex].x)) + new Vector3(rb.velocity.x, 0, rb.velocity.z) * VelocityCompensation;
         return FootsiePosition;
     }
 
     void PlayerMove()
     {
+        //Push the body around if the Player is able to control it
         rb.AddRelativeForce(-Input.GetAxis("Vertical") * PlayerWalkSpeed, 0, Input.GetAxis("Horizontal") * PlayerWalkSpeed);
         rb.AddRelativeTorque(new Vector3(0, Input.GetAxis("Mouse X") * PlayerTurnSpeed, 0));
     }

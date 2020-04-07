@@ -31,23 +31,27 @@ public class ExploBullet : MonoBehaviour
     }
 
     void Boom()
-    {
+    {      
         for (int i = 0; i < Physics.OverlapSphere(transform.position, range).Length; i++)
         {
+            //Get all enemys and disable their movement script to turn them into passive ragdolls
             if (Physics.OverlapSphere(transform.position, range)[i].GetComponent<AcR_Body>() != null)
             {
                 Physics.OverlapSphere(transform.position, range)[i].GetComponent<AcR_Body>().enabled = false;
             }
+            //Add Explosion Force to all Rigidbodys nearby.
             if (Physics.OverlapSphere(transform.position, range)[i].GetComponent<Rigidbody>() != null)
             {
                 Physics.OverlapSphere(transform.position, range)[i].GetComponent<Rigidbody>().AddExplosionForce(force, transform.position, range);
             }
         }
+        //Delete the granade after the explosion
         Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
     {
+        //Visualise the explosion radius in the editor
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
     }

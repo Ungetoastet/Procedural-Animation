@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Get needed Components and steal the mouse >:)
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -42,10 +43,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Rotate();
         Jump();
-        if (Input.GetKeyDown(KeyCode.LeftShift) && OnGround)
-        {
-            rb.AddRelativeForce(Vector3.forward * JumpForce / 2, ForceMode.Impulse);
-        }
+
+        //My poor tries to stop the player from rotating 360 degrees on the x axis.
         if (transform.position.y <= -50) transform.SetPositionAndRotation(Vector3.zero, new Quaternion(0, 0, 0, 0));
 
         if (Camera.transform.rotation.eulerAngles.x > 160 && Camera.transform.rotation.eulerAngles.x < 90)
@@ -58,12 +57,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Walk()
     {
+        //Simply push the player around
         if(OnGround) rb.AddRelativeForce(Input.GetAxisRaw("Horizontal") * WalkSpeed, 0, Input.GetAxisRaw("Vertical") * WalkSpeed);
         else rb.AddRelativeForce(Input.GetAxisRaw("Horizontal") * WalkSpeed / 25, 0, Input.GetAxisRaw("Vertical") * WalkSpeed / 20);
     }
 
     void CheckGround()
     {
+        //Adjust drag if being in the air
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit) && hit.distance < GroundCheckDistance)
         {
             OnGround = true;
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Rotate()
     {
+        //Rotate the entire player around the y axis
         transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * XSensitivity));
 
         if (Input.GetAxis("Mouse Y") != 0)
@@ -99,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
+        //Jump.
         if (Input.GetKeyDown(KeyCode.Space) && OnGround)
         {
             rb.AddRelativeForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
