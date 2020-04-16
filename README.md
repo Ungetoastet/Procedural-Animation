@@ -1,7 +1,6 @@
 # Procedural-Animation
 
-A small test for procedural animations. Use it if you want, credits would be nice but not necessary.
-
+A small test for procedural animations. Might make a game out of it. Use the core system if you want, credits would be nice but not necessary. Thanks!
 
 ## Devlog!
 ### 16.04.2020
