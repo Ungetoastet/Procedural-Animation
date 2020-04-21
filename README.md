@@ -8,11 +8,11 @@ There are a lot of bugs and imperfections right now, but I decided to update any
 #### Added:
 -A gun for the most humanoid creature (2 Legs, 2 Arms). He will chase and shoot you.
 #### Known Bugs and errors and other ugly things:
--Particle systems not showing in fullscreen game view
--Enemy sometimes does an accidental 180 and just chases you backwards
+-Particle systems not showing in fullscreen game view  
+-Enemy sometimes does an accidental 180 and just chases you backwards  
 -The pistol model looks trash
 #### Planned for next Update:
--Enemy pathfinding
+-Enemy pathfinding  
 -Particle Systems Bug fix
 
 ### 19.04.2020
