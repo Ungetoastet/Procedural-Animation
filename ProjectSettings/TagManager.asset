@@ -4,6 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Shootable
   - Enemy
   layers:
   - Default
@@ -14,10 +15,10 @@ TagManager:
   - UI
   - 
   - 
-  - Player
-  - 
-  - 
-  - 
+  - Lighting
+  - Ground
+  - Postprocessing
+  - Particles
   - 
   - 
   - 
@@ -39,6 +40,9 @@ TagManager:
   - 
   - Enemy
   m_SortingLayers:
+  - name: Fire
+    uniqueID: 3804908061
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
