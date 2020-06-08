@@ -1,4 +1,5 @@
 # Procedural-Animation
+As you may have noticed, I am not really working anymore on this Project, so until further notice there will be no updates. I hope you could use this or had some fun with this Project.
 
 A small test for procedural animations. Might make a game out of it. Use the core system if you want, credits would be nice but not necessary. Thanks!
 
